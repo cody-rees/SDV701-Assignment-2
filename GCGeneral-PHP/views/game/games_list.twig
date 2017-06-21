@@ -1,0 +1,71 @@
+{% extends "templates/panel.twig" %}{% block content %}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			
+			<!-- Box Header -->
+			<div class="box-header">
+			
+				<!-- Title & Tools -->
+				<h3 class="box-title col-md-2">Listing Games</h3>
+				<div class="box-tools pull-right col-md-10">
+						
+						<!-- Search Input -->
+						<form method="get">	
+							<div class="input-group input-group-sm">
+								<select name="genre" class="form-control" placeholder="Search">
+									<option value="">All Genres</option>
+									{% for genre in genres %}
+									
+									<option value="{{ genre.genre_id }}" {% if selected_genre is defined and genre.genre_id == selected_genre %} selected {% endif %}>{{ genre.genre }}</option>
+									
+									{% endfor %}
+								</select>
+								
+								<div class="input-group-btn">
+									<button type="submit" class= "btn btn-default"><i class="fa fa-search"></i></button>
+								</div>
+					
+							</div>
+						</form>
+						
+					
+					</div>
+					<div class="col-md-12">
+						<small>{% if selected_genre is defined %} {{ genres[selected_genre].description }} {% endif %}</small>
+					</div>
+				
+			</div>
+			
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<tbody>
+						<tr class="row">
+							<th class="col-md-1">ID</th>
+							<th class="col-md-5">Title</th>
+							<th class="col-md-2">Genre</th>
+							<th class="col-md-2">Type</th>
+							<th class="col-md-2 text-center">Edit</th>
+						</tr>
+						
+						{% for game in games %}
+						<tr class="row">
+							<td class="col-md-1">{{ game.game_id }}</td>
+							<td class="col-md-5">{{ game.title }}</td>
+							<td class="col-md-2">{{ genres[game.genre_id].genre }}</td>
+							<td class="col-md-2">{{ game.type }}</td>
+							<td class="col-md-2 text-center">
+								<a href="{{ app.urlFor('edit-game', {'gameID': game.game_id}) }}" class="btn btn-flat btn-primary"><span class="fa fa-edit"></span></a>
+								<a href="{{ app.urlFor('delete-game', {'gameID': game.game_id}) }}" onclick="return confirm('Are you sure?')" class="btn btn-flat btn-danger"><span class="fa fa-trash"></span></a> 
+							</td>
+						</tr>
+						{% endfor %}
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

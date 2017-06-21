@@ -1,0 +1,39 @@
+{% extends "templates/panel.twig" %}{% block content %}
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			
+			<!-- Box Header -->
+			<div class="box-header with-border">
+				
+				<div class="row">
+					
+					<!-- Title & Tools -->
+					<h1 class="box-title col-sm-10">{{ header }}</h1><br>
+				</div>
+				
+			</div>
+			
+			<div class="box-body">
+			
+				{% include "templates/form_builder/form_builder.twig" with formEditGame only %}
+			</div>
+					
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+			$('select[name="select-type"]').change(function() {
+				var value = $(this).val()
+				$('input[name="input-quantity"]').attr('disabled', (value != 'physical'));
+				$('input[name="input-download-url"]').attr('disabled', (value != 'digital'));
+
+
+			});
+	});
+
+</script>
+{% endblock %}
